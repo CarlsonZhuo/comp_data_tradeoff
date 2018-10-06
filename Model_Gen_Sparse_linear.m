@@ -12,7 +12,8 @@ sparsity    = param.sparsity;
 
 true_w      = sprand(p,1,sparsity);
 %% Generate X
-omega = rand;
+% omega = rand;
+omega = 0;
 Z           = randn(p, n);
 X           = zeros(p, n);
 X(1,:)      = Z(1,:) / sqrt(1 - omega^2);
