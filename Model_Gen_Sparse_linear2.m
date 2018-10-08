@@ -1,4 +1,4 @@
-function [ Data ] = Model_Gen_Sparse_linear( param )
+function [ Data ] = Model_Gen_Sparse_linear2( param )
 
 %   Model: y = Xw + e
 %   1. X: [m*n], each column of X is one sample data;
@@ -8,15 +8,14 @@ para_noise  = param.noise;
 n           = param.n;
 p           = param.p;
 sparsity    = param.sparsity;
-true_w      = sprand(p,1,sparsity);
+true_w      = exp(-[1:p].^(0.5));
+true_w      = proj_L1_Linf(true_w', 1);
 %% Generate X
-omega       = 0.0;
-Z           = randn(p, n);
-X           = zeros(p, n);
-X(1,:)      = Z(1,:) / sqrt(1 - omega^2);
-for i=1:(p-1)
-    X(i+1,:)= omega*X(i,:) + Z(i+1,:);
-end
+X           = randn(n, p);
+r           = exp(-[1:p])./exp(-1);
+Sigma       = toeplitz(r);
+X           = X * sqrtm(Sigma);
+X           = X';
 %% Generate y
 noise       = para_noise * randn(n, 1);
 y           = X' * true_w + noise;
