@@ -8,9 +8,10 @@ p = param.p;
 Lmax   = (0.25 * max(sum(X.^2,2)) + lambda);
 hist   = zeros(max_it,1);
 
-alpha = 1 / (4*n^2*Lmax); % The learning rate
+% alpha = 1 / (4*n^2*Lmax); % The learning rate
+alpha = 0.000001; % The learning rate
 w_prev = zeros(p, 1);
-% w_prev = Data.w_star;
+
 
 for k = 1:max_it
     mu = X*(X'*w_prev - y);
@@ -22,10 +23,9 @@ for k = 1:max_it
         w_tilda_new = w_tilda - alpha * ...
             ((X(:,idx)'*w_tilda - y(idx)) * X(:,idx) - ...
             (X(:,idx)'*w_prev - y(idx)) * X(:,idx) + mu);
-        w_tilda = wthresh(w_tilda_new, 's', lambda);
+        w_tilda = proj_L1_Linf(w_tilda_new, 1);
     end
     w_prev = w_tilda;
-%     hist(k) = 0.5*norm(X'*w_prev - y, 2)^2 + lambda*norm(w_prev,1);
     hist(k) = norm(w_prev - param.SVRG_w_hat);
 end
 w_estimated = w_prev;
