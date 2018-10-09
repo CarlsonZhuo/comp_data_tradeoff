@@ -1,10 +1,10 @@
-d500 = lasso_gd(500,5);
-d1000 = lasso_gd(500,10);
-d2000 = lasso_gd(500,25);
+d500 = lasso_gd(500,400);
+d1000 = lasso_gd(500,200);
+d2000 = lasso_gd(500,100);
 
-semilogy(d500);
+semilogy(1:150,d500(1:150));
 hold on
-semilogy(d1000);
+semilogy(1:150,d1000(1:150));
 hold on
-semilogy(d2000);
-legend('d500','d1000','d2000')
+semilogy(1:150,d2000(1:150));
+legend('n=400','n=200','n=100')
