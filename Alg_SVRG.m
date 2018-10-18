@@ -3,8 +3,7 @@ X = Data.X;
 y = Data.y;
 lambda = param.lambda;
 max_it = param.max_it;
-n = param.n;
-p = param.p;
+[p,n] = size(Data.X);
 Lmax   = (0.25 * max(sum(X.^2,2)) + lambda);
 hist   = zeros(max_it,1);
 
@@ -26,7 +25,11 @@ for k = 1:max_it
         w_tilda = proj_L1_Linf(w_tilda_new, 1);
     end
     w_prev = w_tilda;
-    hist(k) = norm(w_prev - param.SVRG_w_hat);
+    cur_err = norm(w_prev - param.SVRG_w_hat);
+    hist(k) = cur_err;
+    if cur_err < param.epsilon
+        break;
+    end
 end
 w_estimated = w_prev;
 end
