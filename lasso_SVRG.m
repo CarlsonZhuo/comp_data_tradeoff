@@ -14,15 +14,15 @@ Data = Model_Gen_Sparse_linear(param);
 
 %% Get the approximation of the best parameter
 param.lambda = 1e-9;
-param.max_it = 300;
 param.epsilon = 1e-6;
 param.mb = 1;
 
-num_samples = max_n:-10:200;
+num_samples = max_n:-200:1000;
 comp_time = size(num_samples);
 figure;
 for i = 1:size(num_samples,2)
     fprintf('\tCurrentl num_samples: %d \n', num_samples(i));
+    param.max_it = 300 - ceil(num_samples(i) / 35);
     idx = randsample(max_n, num_samples(i));
     re_sampled_data.X = Data.X(:,idx);
     re_sampled_data.y = Data.y(idx);

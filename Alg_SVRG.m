@@ -8,7 +8,7 @@ Lmax   = (0.25 * max(sum(X.^2,2)) + lambda);
 hist   = zeros(max_it,1);
 
 % alpha = 1 / (4*n^2*Lmax); % The learning rate
-alpha = 0.000001; % The learning rate
+alpha = 0.00000001; % The learning rate
 w_prev = zeros(p, 1);
 
 
